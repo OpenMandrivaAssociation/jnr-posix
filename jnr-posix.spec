@@ -1,39 +1,16 @@
 %{?_javapackages_macros:%_javapackages_macros}
-%global commit_hash 47d9618
-%global tag_hash a69c89c
-
 Name:           jnr-posix
-Version:        2.4.0
-Release:        2.0%{?dist}
+Version:        3.0.1
+Release:        2.1
 Summary:        Java Posix layer
-
+Group:          Development/Java
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/%{name}/
-Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
+Source0:        https://github.com/jnr/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
 BuildRequires:  jnr-constants
 BuildRequires:  jnr-ffi
-BuildRequires:  jffi
-BuildRequires:  objectweb-asm4
-
 BuildRequires:  maven-local
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       java
-Requires:       jpackage-utils
-Requires:       jnr-constants
-Requires:       jnr-ffi
-Requires:       jffi
-Requires:       objectweb-asm4
 
 BuildArch:      noarch
 
@@ -43,45 +20,38 @@ written in Java and is part of the JNR project
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-
+Group:          Documentation
 
 %description    javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -n jnr-%{name}-%{tag_hash}
+%setup -q
 
-find ./ -name '*.jar' -delete
-find ./ -name '*.class' -delete
+# Remove useless wagon extension.
+%pom_xpath_remove "pom:build/pom:extensions"
+
+%mvn_file : %{name}
 
 %build
 # TODO: some tests still fail
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt README.txt
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/*
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Fri Oct 18 2013 Vít Ondruch <vondruch@redhat.com> - 3.0.1-1
+- Update to jnr-posix 3.0.1.
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
@@ -106,10 +76,10 @@ install -pm 644 pom.xml  \
 * Thu Dec 02 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.1.4-3
 - updates to conform to pkg guidelines
 
-* Fri Sep 09 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.1.4-2
+* Thu Sep 09 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.1.4-2
 - build / include javadocs
 
-* Fri Sep 09 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.1.4-1
+* Thu Sep 09 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.1.4-1
 - bumped version to 1.1.4
 
 * Fri Jan 22 2010 Mohammed Morsi <mmorsi@redhat.com> - 1.0.8-1
@@ -133,3 +103,4 @@ install -pm 644 pom.xml  \
 
 * Tue Apr 22 2008 Conrad Meyer <konrad@tylerc.org> - 0.5-1
 - Initial RPM. 
+

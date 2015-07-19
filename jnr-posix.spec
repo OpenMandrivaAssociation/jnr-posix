@@ -1,7 +1,7 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name:           jnr-posix
 Version:        3.0.1
-Release:        2.1
+Release:        2.2
 Summary:        Java Posix layer
 Group:          Development/Java
 License:        CPL or GPLv2+ or LGPLv2+

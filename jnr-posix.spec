@@ -1,6 +1,6 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name:           jnr-posix
-Version:        3.0.1
+Version:        3.0.9
 Release:        2.2
 Summary:        Java Posix layer
 Group:          Development/Java
@@ -28,14 +28,17 @@ Javadoc for %{name}.
 %prep
 %setup -q
 
+# fix test which assumes that there is a group named "nogroup"
+sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
+
 # Remove useless wagon extension.
 %pom_xpath_remove "pom:build/pom:extensions"
 
-%mvn_file : %{name}
+%mvn_file : %{name}/%{name} %{name}
 
 %build
 # TODO: some tests still fail
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install

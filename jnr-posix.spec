@@ -5,7 +5,7 @@ Release:        2.4
 Summary:        Java Posix layer
 Group:          Development/Java
 License:        CPL or GPLv2+ or LGPLv2+
-URL:            http://github.com/jnr/%{name}/
+URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  jnr-constants

@@ -1,4 +1,5 @@
-removed_sources:
-  jnr-posix-3.0.1.tar.gz: 90bf67c9279b8bc2309da09380dc7c13a366b4e4
 sources:
+  removed_sources: 
+  jnr-posix-3.0.1.tar.gz: 90bf67c9279b8bc2309da09380dc7c13a366b4e4
   jnr-posix-3.0.9.tar.gz: 6371a75773edfaf884b3c28e97f5fe7aaba78361
+  jnr-posix-3.2.7.tar.gz: 0c7aba37faa6a965d46b700f228f3bc03beee3e2

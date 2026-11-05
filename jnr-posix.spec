@@ -9,6 +9,9 @@ Source0:	https://github.com/jnr/jnr-posix/archive/refs/tags/jnr-posix-%{version}
 
 BuildArch:	noarch
 BuildRequires:	python
+# Literal, so the first rpmbuild -bs records them before sysjar is installed.
+BuildRequires:	maven
+BuildRequires:	java-current-devel
 BuildSystem:	maven
 
 %description

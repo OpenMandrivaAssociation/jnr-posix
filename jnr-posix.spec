@@ -12,6 +12,7 @@ BuildRequires:	python
 # Literal, so the first rpmbuild -bs records them before sysjar is installed.
 BuildRequires:	maven
 BuildRequires:	java-current-devel
+BuildRequires:	jnr-parent
 BuildRequires:	jnr-constants
 BuildRequires:	jnr-ffi
 BuildSystem:	maven

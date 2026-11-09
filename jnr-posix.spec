@@ -1,5 +1,5 @@
 Name:		jnr-posix
-Version:	3.2.7
+Version:	3.2.8
 Release:	1
 Summary:	Common cross-platform POSIX APIs for Java
 Group:		Development/Java
@@ -19,6 +19,7 @@ BuildSystem:	maven
 
 %description
 Cross-platform POSIX APIs for Java, used by jnr-unixsocket.
+3.2.8 adds clock_gettime and clock_getres.
 
 %prep
 %setup -q -n jnr-posix-jnr-posix-%{version}
